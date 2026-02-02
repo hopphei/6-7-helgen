@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fest i 67 helgen</title>
+  <style>
+    :root{
+      --bg:#0b0b12;
+      --card:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --text:#fff;
+      --muted:rgba(255,255,255,.75);
+      --accent:#ff4fff;
+      --accent2:#00eaff;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #120024 0%, var(--bg) 55%);
+      color:var(--text);
+      padding:22px;
+    }
+    .wrap{ max-width: 980px; margin: 0 auto; }
+
+    header{ text-align:center; margin-bottom: 18px; }
+    h1{
+      margin: 0 0 6px 0;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      color: var(--accent);
+    }
+    .subtitle{ margin:0; color:var(--muted); }
+
+    .grid{
+      display:grid;
+      gap:14px;
+      grid-template-columns: 1fr;
+    }
+
+    .card{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+    }
+
+    h2{
+      margin:0 0 10px 0;
+      font-size:1.1rem;
+      color:var(--accent2);
+    }
+    p{ margin:8px 0; color:var(--muted); }
+    .note{ font-size:.95rem; color:rgba(255,255,255,.7); }
+
+    /* Påmelding UI */
+    .signup{
+      display:grid;
+      gap:12px;
+    }
+    .signupTop{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    input, button{
+      padding:10px 12px;
+      border-radius:10px;
+      font-size:16px;
+    }
+    input{
+      flex:1;
+      min-width:220px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      outline:none;
+    }
+    button{
+      cursor:pointer;
+      border:none;
+      font-weight:800;
+      background: linear-gradient(45deg, var(--accent), var(--accent2));
+      color:#0b0b12;
+      transition: transform .08s ease;
+      box-shadow: 0 0 14px rgba(255,79,255,.18);
+    }
+    button:active{ transform: scale(.98); }
+    .secondary{
+      background: transparent;
+      color: var(--text);
+      border:1px solid var(--border);
+      font-weight:700;
+      box-shadow:none;
+    }
+
+    .pillRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 6px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      font-weight:650;
+    }
+    .pill small{ color: var(--muted); font-weight:600; }
+    .pill button{
+      padding:0 8px;
+      height:26px;
+      border-radius:999px;
+      font-size:14px;
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border:1px solid var(--border);
+      font-weight:800;
+      box-shadow:none;
+    }
+
+    /* Wheel UI */
+    .twoCol{
+      display:grid;
+      gap:14px;
+      grid-template-columns: 1fr;
+    }
+    .wheelCard{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .wheelWrap{
+      position:relative;
+      width:min(520px, 95vw);
+      aspect-ratio: 1 / 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    canvas{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      background:#fff;
+      box-shadow: 0 0 22px rgba(255,0,255,.22);
+    }
+    .arrow{
+      position:absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width:0;height:0;
+      border-left:18px solid transparent;
+      border-right:18px solid transparent;
+      border-top:34px solid #ff2b2b;
+      filter: drop-shadow(0 0 10px rgba(255,43,43,.8));
+      z-index: 5;
+    }
+    .winner{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      z-index: 4;
+    }
+    .winner > div{
+      max-width: 85%;
+      text-align:center;
+      padding:10px 14px;
+      border-radius:12px;
+      background: rgba(255,255,255,.85);
+      color:#000;
+      font-weight:900;
+      box-shadow: 0 0 12px rgba(255,0,255,.25);
+    }
+
+    .wheelButtons{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    @media (min-width: 900px){
+      .twoCol{ grid-template-columns: 1.05fr .95fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Fest i 67 helgen</h1>
+      <p class="subtitle">Fredag 6. Februar</p>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Info</h2>
+        <p><b>Adresse:</b> Hans Hagerups gate 8 (3. etasje)</p>
+        <p><b>Props:</b> Alle tar med én Smirnoff Ice til å “ice” en valgfri person</p>
+        <p><b>Dresscode:</b> kjole og dress</p>
+        <p class="note">Edi: trenger ikke dress hvis du ikke har.</p>
+      </section>
+
+      <section class="card">
+        <h2>Tidsplan fredag</h2>
+        <p><b>19:00</b> – Ankomst</p>
+      </section>
+
+      <div class="twoCol">
+        <section class="card">
+          <h2>Påmelding</h2>
+
+          <div class="signup">
+            <div class="signupTop">
+              <input id="name" type="text" placeholder="Ditt navn (f.eks. Ola)" autocomplete="name" />
+              <button id="signupButton">Meld på</button>
+              <button class="secondary" id="signOffButton">Meld av</button>
+            </div>
+
+            <p class="note" id="countText">Laster deltakere…</p>
+
+            <div class="pillRow" id="pillRow"></div>
+
+            <p class="note">
+              Tips: Du kan også fjerne folk ved å trykke <b>✕</b> på navnet.
+            </p>
+          </div>
+        </section>
+
+        <section class="card wheelCard">
+          <h2>Hvem skal ices?</h2>
+
+          <div class="wheelWrap">
+            <div class="arrow"></div>
+            <canvas id="wheelCanvas"></canvas>
+            <div class="winner" id="winnerOverlay" style="display:none;">
+              <div id="winnerText"></div>
+            </div>
+          </div>
+
+          <div class="wheelButtons">
+            <button id="spinButton">SPINN HJULET!</button>
+            <button class="secondary" id="clearWinnerButton" type="button">Skjul vinner</button>
+          </div>
+
+          <p class="note">Hjulet bruker alle påmeldte navn. (Må være minst 2 for best effekt.)</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import { getDatabase, ref, set, remove, onValue } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+
+    // ✅ Ny Firebase (helgen-b529e)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFNFJ29F14UmMvJLKAzvDF7CXUjWRtGfM",
+      authDomain: "helgen-b529e.firebaseapp.com",
+      databaseURL: "https://helgen-b529e-default-rtdb.firebaseio.com",
+      projectId: "helgen-b529e",
+      storageBucket: "helgen-b529e.firebasestorage.app",
+      messagingSenderId: "826550353091",
+      appId: "1:826550353091:web:12a4b5264eba394a96b676"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Vi lagrer unikt per navn, så slipper duplikater
+    const attendeesRef = ref(db, "attendees");
+
+    const nameInput = document.getElementById("name");
+    const pillRow = document.getElementById("pillRow");
+    const countText = document.getElementById("countText");
+    const signupBtn = document.getElementById("signupButton");
+    const signoffBtn = document.getElementById("signOffButton");
+
+    // Wheel
+    const canvas = document.getElementById("wheelCanvas");
+    const ctx = canvas.getContext("2d");
+    const spinBtn = document.getElementById("spinButton");
+    const winnerOverlay = document.getElementById("winnerOverlay");
+    const winnerText = document.getElementById("winnerText");
+    const clearWinnerButton = document.getElementById("clearWinnerButton");
+
+    let attendees = [];        // display names
+    let rotation = 0;          // radians
+    let spinning = false;
+
+    function sanitizeKey(name) {
+      // RTDB keys kan ikke inneholde . # $ [ ] /
+      return name.trim().toLowerCase().replace(/[.#$[\]\/]/g, "_");
+    }
+
+    function normalizeDisplayName(name) {
+      // Rydd litt, men bevar det folk skriver
+      return name.trim().replace(/\s+/g, " ");
+    }
+
+    async function signUp() {
+      const raw = nameInput.value;
+      const displayName = normalizeDisplayName(raw);
+      if (!displayName) return alert("Skriv inn navnet ditt.");
+      const key = sanitizeKey(displayName);
+
+      // set() gjør at samme navn bare finnes én gang
+      await set(ref(db, `attendees/${key}`), {
+        navn: displayName,
+        timestamp: Date.now()
+      });
+
+      nameInput.value = "";
+    }
+
+    async function signOff() {
+      const raw = nameInput.value;
+      const displayName = normalizeDisplayName(raw);
+      if (!displayName) return alert("Skriv inn navnet ditt for å melde deg av.");
+      const key = sanitizeKey(displayName);
+
+      await remove(ref(db, `attendees/${key}`));
+      nameInput.value = "";
+    }
+
+    function renderAttendees() {
+      // UI
+      pillRow.innerHTML = "";
+      const sorted = [...attendees].sort((a,b) => a.localeCompare(b, "no"));
+
+      countText.textContent = `Påmeldte: ${sorted.length}`;
+
+      sorted.forEach((name) => {
+        const pill = document.createElement("div");
+        pill.className = "pill";
+        pill.innerHTML = `<span>${name}</span>`;
+
+        const x = document.createElement("button");
+        x.type = "button";
+        x.title = "Fjern";
+        x.textContent = "✕";
+        x.addEventListener("click", async () => {
+          const key = sanitizeKey(name);
+          await remove(ref(db, `attendees/${key}`));
+        });
+
+        pill.appendChild(x);
+        pillRow.appendChild(pill);
+      });
+
+      // Wheel redraw
+      fitCanvasToDisplaySize();
+      drawWheel();
+    }
+
+    // Firebase -> live oppdatering
+    onValue(attendeesRef, (snapshot) => {
+      const arr = [];
+      snapshot.forEach(child => {
+        const v = child.val();
+        if (v?.navn) arr.push(v.navn);
+      });
+      attendees = arr;
+      renderAttendees();
+    });
+
+    // ---------- Wheel drawing ----------
+    function fitCanvasToDisplaySize() {
+      // high-DPI crisp
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      const size = Math.floor(Math.min(rect.width, rect.height));
+      canvas.width = Math.floor(size * dpr);
+      canvas.height = Math.floor(size * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawWheel() {
+      const rect = canvas.getBoundingClientRect();
+      const size = Math.min(rect.width, rect.height);
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const radius = (size / 2) - 8;
+
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      if (!attendees.length) return;
+
+      const n = attendees.length;
+      const slice = (Math.PI * 2) / n;
+
+      // wheel
+      for (let i = 0; i < n; i++) {
+        const start = rotation + i * slice;
+        const end = start + slice;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, radius, start, end);
+        ctx.closePath();
+
+        // farger
+        ctx.fillStyle = `hsl(${(i * (360 / n)) % 360}, 100%, 70%)`;
+        ctx.fill();
+        ctx.strokeStyle = "rgba(0,0,0,.35)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // tekst
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(start + slice / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#000";
+        ctx.font = "600 16px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+        ctx.fillText(attendees[i], radius - 12, 6);
+        ctx.restore();
+      }
+
+      // midtpunkt
+      ctx.beginPath();
+      ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(0,0,0,.25)";
+      ctx.fill();
+    }
+
+    function pickWinnerIndex() {
+      // Pilen peker opp. "Opp" tilsvarer vinkel -90° (3π/2) i canvas-koordinater.
+      // Vi korrigerer med 3π/2 slik at 0 peker opp.
+      const n = attendees.length;
+      const slice = (Math.PI * 2) / n;
+
+      const adjusted = (Math.PI * 1.5 - rotation) % (Math.PI * 2);
+      let idx = Math.floor(adjusted / slice);
+      if (idx < 0) idx += n;
+      return idx;
+    }
+
+    function showWinner() {
+      if (!attendees.length) return;
+      const idx = pickWinnerIndex();
+      const name = attendees[idx];
+      winnerText.textContent = `${name} skal ices! 🧊`;
+      winnerOverlay.style.display = "flex";
+    }
+
+    function spinWheel() {
+      if (spinning) return;
+      if (attendees.length < 2) return alert("Legg til minst 2 påmeldte for å spinne hjulet.");
+
+      spinning = true;
+      winnerOverlay.style.display = "none";
+
+      const start = performance.now();
+      const duration = 4200 + Math.random() * 1200; // ms
+      const extraTurns = 8 + Math.random() * 6;     // antall runder
+      const startRot = rotation;
+      const targetRot = startRot + extraTurns * Math.PI * 2 + Math.random() * Math.PI * 2;
+
+      function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+      function frame(now){
+        const t = Math.min(1, (now - start) / duration);
+        const eased = easeOutCubic(t);
+        rotation = startRot + (targetRot - startRot) * eased;
+        drawWheel();
+
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          spinning = false;
+          rotation = rotation % (Math.PI * 2);
+          drawWheel();
+          showWinner();
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    // Events
+    signupBtn.addEventListener("click", signUp);
+    signoffBtn.addEventListener("click", signOff);
+    spinBtn.addEventListener("click", spinWheel);
+    clearWinnerButton.addEventListener("click", () => winnerOverlay.style.display = "none");
+
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") signUp();
+    });
+
+    window.addEventListener("resize", () => {
+      fitCanvasToDisplaySize();
+      drawWheel();
+    });
+
+    // init draw
+    fitCanvasToDisplaySize();
+    drawWheel();
+  </script>
+</body>
+</html>
+
