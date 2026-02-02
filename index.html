@@ -5,24 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fest i 67 helgen</title>
   <style>
-    :root{
-      --bg:#0b0b12;
-      --card:rgba(255,255,255,.06);
-      --border:rgba(255,255,255,.12);
-      --text:#fff;
-      --muted:rgba(255,255,255,.75);
-      --accent:#ff4fff;
-      --accent2:#00eaff;
-    }
-
+    :root {
+    --bg: #05000f;
+    --card: rgba(0, 0, 0, 0.55);
+    --border: rgba(255, 255, 255, 0.2);
+  
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.75);
+  
+    /* 🎉 HELT CRAZY FARGER */
+    --accent: #ff00ff;
+    --accent2: #00ffff;
+    --accent3: #39ff14;
+    --accent4: #ffee00;
+  }
     *{ box-sizing:border-box; }
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #120024 0%, var(--bg) 55%);
       color:var(--text);
       padding:22px;
+    
+      background: linear-gradient(
+        270deg,
+        #120024,
+        #1a0033,
+        #001f33,
+        #002b1a,
+        #2b001a,
+        #33001f
+      );
+      background-size: 500% 500%;
+      animation: bgShift 16s ease infinite;
     }
+
     .wrap{ max-width: 980px; margin: 0 auto; }
 
     header{ text-align:center; margin-bottom: 18px; }
@@ -31,7 +53,7 @@
       font-size: clamp(1.6rem, 4vw, 2.2rem);
       color: var(--accent);
     }
-    .subtitle{ margin:0; color:var(--muted); }
+    .subtitle{ margin:0; color: var(--muted); }
 
     .grid{
       display:grid;
