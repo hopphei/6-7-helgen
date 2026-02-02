@@ -108,6 +108,29 @@
       color: transparent;
     }
 
+    h3{
+      margin: 12px 0 4px 0;
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+    
+      background: linear-gradient(
+        270deg,
+        var(--accent2),
+        var(--accent4),
+        var(--accent2)
+      );
+      background-size: 300% 300%;
+      animation: bgShift 20s ease infinite;
+    
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    
+      text-transform: uppercase;
+    }
+
+    
 
     p{ margin:8px 0; color:var(--muted); }
     .note{ font-size:.95rem; color:rgba(255,255,255,.7); }
@@ -282,13 +305,26 @@
 
     <div class="grid">
       <section class="card">
-        <h2>Info</h2>
-        <p><b>Adresse:</b> Hans Hagerups gate 8 (3. etasje)</p>
-        <p><b>Mat:</b> Vi serverer Wiener-dogs, samene elsker dette</p>
-        <p><b>Dato:</b> 6. februar (samenes nasjonaldag) ((på fredag)) </p>
-        <p><b>Props:</b> Alle tar med en Smirnoff Ice til å ice en valgfri same</p>
-        <p><b>Dresscode:</b> kjole og dress, vi skal pynte oss for samene</p>
-        <p><b>Edi:</b> trenger ikke dress hvis du ikke har.</p>
+       <h2>Info</h2>
+
+        <h3>Adresse</h3>
+        <p>Hans Hagerups gate 8 (3. etasje)</p>
+        
+        <h3>Mat</h3>
+        <p>Vi serverer Wiener-dogs, samene elsker dette</p>
+        
+        <h3>Dato</h3>
+        <p>6. februar (samenes nasjonaldag)((på fredag))</p>
+        
+        <h3>Props</h3>
+        <p>Alle tar med en Smirnoff Ice til å ice en valgfri same</p>
+        
+        <h3>Dresscode</h3>
+        <p>Kjole og dress, vi skal pynte oss for samene</p>
+        
+        <h3>Edi</h3>
+        <p>Trenger ikke dress hvis du ikke har.</p>
+
       </section>
 
       <section class="card">
