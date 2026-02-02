@@ -70,12 +70,24 @@
    h2{
       margin:0 0 10px 0;
       font-size:1.1rem;
-      color: var(--accent2);
+      font-weight:800;
     
-      text-shadow:
-        0 0 6px rgba(0,255,255,.6),
-        0 0 14px rgba(0,255,255,.4);
+      background: linear-gradient(
+        270deg,
+        var(--accent),
+        var(--accent2),
+        var(--accent3),
+        var(--accent4),
+        var(--accent)
+      );
+      background-size: 500% 500%;
+      animation: bgShift 8s ease infinite;
+    
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
+
 
     p{ margin:8px 0; color:var(--muted); }
     .note{ font-size:.95rem; color:rgba(255,255,255,.7); }
